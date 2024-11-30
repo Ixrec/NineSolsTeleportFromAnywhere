@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace ExampleMod;
+namespace TeleportFromAnywhere;
 
 [HarmonyPatch]
 public class Patches {
