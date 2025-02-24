@@ -3,7 +3,7 @@
         <AssemblyName>TeleportFromAnywhere</AssemblyName>
         <Description>A Nine Sols mod that allows the player to use the "Teleport" menu from anywhere in the game, not just the Pavilion root node.</Description>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <Version>0.1.1</Version>
+        <Version>0.1.2</Version>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <PublishRelease>true</PublishRelease>
