@@ -38,6 +38,16 @@ public class TeleportFromAnywhere : BaseUnityPlugin {
             return;
         }
 
+        var inPrisonArea = SingletonBehaviour<GameCore>.Instance.CurrentSceneName == "A5_S2_Jail_Remake_Final";
+        if (inPrisonArea) {
+            var prisonNodeUnlocked = SingletonBehaviour<GameFlagManager>.Instance.GetTeleportPointWithPath("28a1908d9e21d4136b8c903e2b92b0afTeleportPointData").unlocked.CurrentValue;
+            if (!prisonNodeUnlocked) {
+                Log.Info($"TeleportFromAnywhere: Keeping Teleport menu hidden because we're in Prison and its node hasn't been activated yet."
+                    + " If the player teleported out now, they'd never be able to get back in.");
+                return;
+            }
+        }
+
         if (!items[0].IsAllValid) {
             Log.Debug($"TabsUI_PrepareValidTab_Postfix forcing TeleportTab into the list of 'valid' menu tabs");
             var validItems = AccessTools.FieldRefAccess<TabsUI, List<UITabsItem>>("validItems").Invoke(__instance);
