@@ -28,6 +28,11 @@ public class TeleportFromAnywhere : BaseUnityPlugin {
         harmony.UnpatchSelf();
     }
 
+    /*
+     * The flagship feature of this mod: Making the "Teleport" tab of the pause menu show up no matter where you are.
+     * With the one exception of pre-node Prison to avoid softlocks/unreachable locations.
+     */
+
     [HarmonyPostfix, HarmonyPatch(typeof(TabsUI), "PrepareValidTab")]
     public static void TabsUI_PrepareValidTab_Postfix(TabsUI __instance) {
         var items = AccessTools.FieldRefAccess<TabsUI, List<UITabsItem>>("items").Invoke(__instance);
@@ -80,4 +85,28 @@ public class TeleportFromAnywhere : BaseUnityPlugin {
 
         return false; // skip vanilla implementation
     }
+
+    /*
+     * Allow teleporting to your "current node", since this mod breaks the assumption that you must already be there.
+     */
+
+    // When you press a disabled UIControlButton, this IsNotAcquired is what's checked to prevent it from doing anything.
+    // Thus, overriding this getter is how you forcibly re-enable a disabled UIControlButton.
+    [HarmonyPostfix, HarmonyPatch(typeof(TeleportPointButton), "IsNotAcquired", MethodType.Getter)]
+    public static void TeleportPointButton_get_IsNotAcquired(TeleportPointButton __instance, ref bool __result) {
+        if (__result == true) {
+            Log.Info($"TeleportPointButton_get_IsNotAcquired enabling '{__instance?.name}' button, so the player can teleport there despite it being their 'current node'");
+            __result = false;
+        }
+    }
+
+    // Also show the "[Z] Teleport" prompt on the current node, by preventing the TPB from swapping InstructionData with exitInstruction
+    [HarmonyPrefix, HarmonyPatch(typeof(TeleportPointButton), "GetInstructionData")]
+    public static bool TeleportPointButton_GetInstructionData(TeleportPointButton __instance, ref ButtonInstructionData __result) {
+        // The vanilla impl is "return base.GetInstructionData() unless PlayerIsHere", we want just "base.GetInstructionData()", and
+        // UIControlButton::GetInstructionData() just returns UIControlButton.InstructionData so that's the easiest thing to do.
+        __result = AccessTools.FieldRefAccess<UIControlButton, ButtonInstructionData>("InstructionData").Invoke(__instance);
+        return false;
+    }
+
 }

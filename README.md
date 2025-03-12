@@ -2,7 +2,11 @@
 
 Simply open the menu as usual, and the "Teleport" section will be available in the top left as if you were at the Pavilion root node.
 
-I created this mod because I'll eventually need it for my Archipelago Randomizer, and (unlike many parts of a randomizer) it makes sense as a separate quality-of-life mod for veteran players.
+In addition:
+
+- The Teleport menu will let you teleport directly to your "current node", instead of assuming you must already be sitting at it.
+
+I created this mod because my Archipelago Randomizer needs this functionality, and (unlike many parts of a randomizer) it makes sense as a separate quality-of-life mod for veteran players.
 
 ## Doesn't DebugMod already have a teleport feature?
 
