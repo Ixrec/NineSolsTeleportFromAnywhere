@@ -38,6 +38,7 @@ public class TeleportFromAnywhere : BaseUnityPlugin {
             return;
         }
 
+        if (!GameCore.IsAvailable() || !GameFlagManager.IsAvailable()) return;
         var inPrisonArea = SingletonBehaviour<GameCore>.Instance.CurrentSceneName == "A5_S2_Jail_Remake_Final";
         if (inPrisonArea) {
             var prisonNodeUnlocked = SingletonBehaviour<GameFlagManager>.Instance.GetTeleportPointWithPath("28a1908d9e21d4136b8c903e2b92b0afTeleportPointData").unlocked.CurrentValue;
@@ -62,6 +63,7 @@ public class TeleportFromAnywhere : BaseUnityPlugin {
     public static bool TeleportPointButton_SubmitImplementation(TeleportPointButton __instance) {
         Log.Info($"TeleportPointButton_SubmitImplementation called for button '{__instance?.name}'");
 
+        if (!GameCore.IsAvailable() || !ApplicationUIGroupManager.IsAvailable()) return true;
         var savePointGO = SingletonBehaviour<GameCore>.Instance?.savePanelUiController?.CurrentSavePointGameObjectOnScene;
         if (savePointGO != null) {
             // This is a "normal" teleport, with Yi sitting down at the Pavilion root node
