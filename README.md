@@ -7,6 +7,7 @@ In addition:
 - The Teleport menu will let you teleport directly to your "current node", instead of assuming you must already be sitting at it.
 - The Root Node menu will always show the [Pavilion]/[Last Node] button, even when the vanilla game normally hides this button (e.g. during the Prison sequence and just after Lady E).
 - The Root Node menu will show the [Teleport] button on all nodes, not just the Pavilion node.
+- Lady E's soulscape will no longer take away your Mystic Nymph, so that teleporting out of her soulscape won't leave you nymph-less.
 
 I created this mod because my Archipelago Randomizer needs this functionality, and (unlike many parts of a randomizer) it makes sense as a separate quality-of-life mod for veteran players.
 
