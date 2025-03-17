@@ -139,7 +139,7 @@ public class TeleportFromAnywhere : BaseUnityPlugin {
     public static void TeleportPointMatchSavePanelCondition_get_isValid(TeleportPointMatchSavePanelCondition __instance, ref bool __result) {
         //Log.Info($"TeleportPointMatchSavePanelCondition isValid __result={__result} __instance={__instance.name} parent={__instance.transform.parent?.name}");
         if (__instance.transform.parent?.name == "Teleport 神遊" && __result == false) {
-            Log.Info($"forcing TeleportPointMatchSavePanelCondition on \"Teleport 神遊\" to pass so the non-FSP Root Node menus will also display the [Teleport] option");
+            //Log.Info($"forcing TeleportPointMatchSavePanelCondition on \"Teleport 神遊\" to pass so the non-FSP Root Node menus will also display the [Teleport] option");
             __result = true;
         }
     }
