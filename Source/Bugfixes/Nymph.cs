@@ -37,7 +37,16 @@ internal class Nymph {
         if (__instance.scheme == PickableScheme.RemoveItem && __instance.pickItemData.FinalSaveID == NymphAbilitySaveFlagId) {
             var goPath = GetGOPath(__instance.gameObject);
             if (goPath == "A2_Stage_Remake/Room/Prefab/FallingTeleportTrickBackgroundProvider/A7_HotSpring/溫泉場景Setting FSM Object/FSM Animator/LogicRoot/SectionA/[CutScene] Portal 第一次來到 A7/--[States]/FSM/[State] PlayCutSceneEnd/[Action] DisableButterfly") {
-                Log.Info($"PickItemAction_OnStateEnterImplement preventing Lady E's soulscape from disabling the nymph, so you can safely teleport out without losing it");
+
+                // Since this block is guaranteed to run at the start of the soulscape, and we have to patch it anyway for the nymph removal issue,
+                // we might as well re-use this block to fix the escort nymph issue as well:
+                var escortNymphState = (GameFlagInt)SingletonBehaviour<SaveManager>.Instance.allFlags.FlagDict["abf251f7-ed0d-437e-8797-34946931068c_93653f615d5940a409fffdcecb72ec43GameFlagInt"];
+                if (escortNymphState.CurrentValue > 0) {
+                    Log.Info($"resetting the 'escort nymph' back to its initial position, since it was at position {escortNymphState.CurrentValue} which would make the soulscape impossible to finish");
+                    escortNymphState.CurrentValue = 0;
+                }
+
+                Log.Info($"preventing Lady E's soulscape from disabling the nymph, so you can safely teleport out without losing it");
                 return false; // prevent the base game code from disabling the nymph
             }
         }
